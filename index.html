@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سباق الكرات الزجاجية</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+            margin: 0;
+        }
+
+        #raceTrack {
+            width: 600px;
+            height: 400px;
+            background-color: #eee;
+            border: 2px solid #333;
+            margin: 20px auto;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ball {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            position: absolute;
+            top: 0;
+        }
+
+        #ball1 { background-color: red; }
+        #ball2 { background-color: blue; }
+        #ball3 { background-color: green; }
+
+        .obstacle {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+
+<h1>لعبة سباق الكرات الزجاجية</h1>
+<p>انقر لبدء السباق!</p>
+
+<div id="raceTrack">
+    <div id="ball1" class="ball"></div>
+    <div id="ball2" class="ball"></div>
+    <div id="ball3" class="ball"></div>
+    <div class="obstacle" style="left: 200px; top: 150px;"></div>
+    <div class="obstacle" style="left: 400px; top: 250px;"></div>
+</div>
+
+<script>
+    const balls = [
+        {element: document.getElementById('ball1'), position: 0, speed: Math.random() * 3 + 1},
+        {element: document.getElementById('ball2'), position: 0, speed: Math.random() * 3 + 1},
+        {element: document.getElementById('ball3'), position: 0, speed: Math.random() * 3 + 1}
+    ];
+
+    let raceStarted = false;
+
+    document.body.addEventListener('click', startRace);
+
+    function startRace() {
+        if (raceStarted) return;
+        raceStarted = true;
+
+        balls.forEach((ball, index) => {
+            ball.interval = setInterval(() => {
+                ball.position += ball.speed;
+                ball.element.style.left = ball.position + 'px';
+
+                if (ball.position >= 550) {
+                    clearInterval(ball.interval);
+                    announceWinner(ball.element);
+                }
+            }, 30);
+        });
+    }
+
+    function announceWinner(winnerBall) {
+        setTimeout(() => {
+            alert(`${winnerBall.id} فاز بالسباق!`);
+        }, 100);
+    }
+</script>
+
+</body>
+</html>
