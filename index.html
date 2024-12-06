@@ -3,132 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تسجيل الدخول</title>
+    <title>خطوات استعمال موقع النجاح</title>
     <style>
+        /* استخدام خط جميل يتناسب مع التصميم الفخم */
         body {
             font-family: 'Arial', sans-serif;
-            background: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: linear-gradient(135deg, #f06, #ff9);
-            border-radius: 10px;
-            padding: 30px;
-            width: 300px;
+            background-color: #f0f8ff; /* لون خلفية أزرق فاتح */
+            color: #3e8e41; /* لون أخضر هادئ */
             text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 1.5s ease-in-out;
+            margin: 0;
+            padding: 0;
+            animation: fadeIn 1.5s ease-in-out; /* إضافة تأثير ظهور الصفحة */
         }
-        h2 {
-            margin-bottom: 20px;
-            color: #fff;
-            font-size: 24px;
-        }
-        input, select {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        input[type="submit"] {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        input[type="submit"]:hover {
-            background-color: #45a049;
-        }
+
+        /* تأثير لظهور العناوين */
         @keyframes fadeIn {
-            0% {
-                opacity: 0;
-                transform: translateY(50px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* رأس الصفحة */
+        header {
+            background-color: #3e8e41;
+            color: white;
+            padding: 20px;
+            border-bottom: 4px solid #6dbf60; /* إضافة خط أخضر أسفل العنوان */
+            animation: slideIn 1.5s ease-in-out;
+        }
+
+        /* تأثير لحركة الشريط العلوي */
+        @keyframes slideIn {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        /* تنسيق الخطوات مع إضافة تأثيرات عند التمرير */
+        .step {
+            margin: 30px;
+            padding: 30px;
+            border: 3px solid #6dbf60;
+            border-radius: 15px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* تأثير عند التمرير فوق الخطوات */
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .step h2 {
+            color: #3e8e41;
+            font-size: 22px;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .step:hover h2 {
+            color: #6dbf60;
+        }
+
+        /* تنسيق الأزرار */
+        button {
+            background-color: #6dbf60;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            margin-top: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #4b9f46;
+            transform: translateY(-5px);
+        }
+
+        /* تنسيق التذييل */
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #3e8e41;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            font-size: 16px;
+            border-top: 4px solid #6dbf60;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>تسجيل الدخول</h2>
-        <form id="loginForm">
-            <input type="text" id="fullName" placeholder="الاسم الكامل" required>
-            <input type="text" id="phoneNumber" placeholder="رقم الهاتف" required pattern="\d+" title="الرجاء إدخال أرقام فقط">
-            <select id="level" required>
-                <option value="">اختر المستوى</option>
-                <option value="أولى باك">أولى باك</option>
-                <option value="ثانية باك">ثانية باك</option>
-            </select>
-            <select id="subject" required>
-                <option value="">اختر المادة</option>
-                <option value="الفيزياء">الفيزياء</option>
-                <option value="الرياضيات">الرياضيات</option>
-            </select>
-            <label for="paymentMethod">طريقة الدفع:</label>
-            <select id="paymentMethod" required>
-                <option value="">اختر طريقة الدفع</option>
-                <option value="كاش بلوس">كاش بلوس</option>
-                <option value="بريد بنك">بريد بنك</option>
-                <option value="بايبال">بايبال</option>
-            </select>
-            <!-- تم إزالة حقل المبلغ لأن المبلغ ثابت (200DH) -->
-            <input type="submit" value="إرسال">
-        </form>
+    
+
+    <div class="step">
+        <h2>الخطوة 1: إدخال البيانات الشخصية</h2>
+        <p>يرجى إدخال الاسم الكامل ورقم الهاتف.</p>
     </div>
 
-    <script>
-        const loginForm = document.getElementById('loginForm');
+    <div class="step">
+        <h2>الخطوة 2: اختيار المادة والمستوى</h2>
+        <p>اختر المادة (فيزياء أو رياضيات) والمستوى الدراسي (أولى أو ثانية بكالوريا).</p>
+    </div>
 
-        loginForm.addEventListener('submit', function(event) {
-            event.preventDefault();
+    <div class="step">
+        <h2>الخطوة 3: تحميل إثبات الدفع</h2>
+        <p>قم بتحميل صورة لإثبات الدفع في الحقل المخصص.</p>
+    </div>
 
-            // جمع القيم المدخلة
-            const fullName = document.getElementById('fullName').value;
-            const phoneNumber = document.getElementById('phoneNumber').value;
-            const level = document.getElementById('level').value;
-            const subject = document.getElementById('subject').value;
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            
-            // المبلغ ثابت 200DH
-            const amount = 200;
+    <div class="step">
+        <h2>الخطوة 4: إرسال البيانات</h2>
+        <p>اضغط على زر إرسال البيانات ليتم إرسالها عبر البوت إلى تلغرام.</p>
+    </div>
 
-            // التحقق من أن رقم الهاتف يحتوي على أرقام فقط
-            const phoneRegex = /^\d+$/;
-            if (!phoneRegex.test(phoneNumber)) {
-                alert('يرجى إدخال رقم هاتف صالح يحتوي على أرقام فقط');
-                return;
-            }
+    <div class="step">
+        <h2>الخطوة 5: ستتلقى كود دخول المجموعة</h2>
+        <p>بعد إرسال البيانات، سيتم إرسال كود لدخول المجموعة عبر واتساب.</p>
+    </div>
 
-            // توكن بوت تليغرام و ID
-            const token = '8080174902:AAHX9XK3_Yd-TkY8Vq2LBzK8BGCWFmqy17o';
-            const chatId = '7203065656';
+    <div class="step">
+        <h2>الخطوة 6: تلقي الشروحات عبر واتساب</h2>
+        <p>بعد إرسال البيانات، ستتلقى الشروحات عبر واتساب.</p>
+    </div>
 
-            // الرسالة المرسلة إلى تليغرام
-            const message = `الاسم الكامل: ${fullName}\nرقم الهاتف: ${phoneNumber}\nالمستوى: ${level}\nالمادة: ${subject}\nطريقة الدفع: ${paymentMethod}\nالمبلغ: ${amount} درهم`;
+    <button onclick="window.location.href='https://hamzahamzahhh.github.io/34h___a___m___z___a34/'">دخول الموقع</button>
 
-            // إرسال البيانات إلى بوت تليغرام
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        alert("تم إرسال البيانات بنجاح!");
-                        // يمكنك إعادة توجيه المستخدم إلى الصفحة الثانية هنا إن أردت
-                        window.location.href = "page2.html"; // استبدل مع رابط الصفحة التالية
-                    } else {
-                        alert('حدث خطأ أثناء إرسال البيانات');
-                    }
-                });
-        });
-    </script>
+    
+
 </body>
 </html>
